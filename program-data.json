@@ -1,0 +1,188 @@
+[
+  {
+    "name": "Marshall 1’s",
+    "distance": 30,
+    "focus": "Find your arm path",
+    "file": "1_marshall",
+    "start": 0.4,
+    "end": 2.5,
+    "balls": [
+      [
+        "Black",
+        "4"
+      ],
+      [
+        "Green",
+        "3"
+      ],
+      [
+        "Red",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Start tall in a narrow, balanced stance.",
+      "Move your arm smoothly; keep it connected to your turn.",
+      "Turn toward your partner without yanking your head.",
+      "Finish under control. Reset before the next throw."
+    ]
+  },
+  {
+    "name": "Torque",
+    "distance": 45,
+    "focus": "Turn from the ground up",
+    "file": "2_torque",
+    "start": 1.1,
+    "end": 3.2,
+    "balls": [
+      [
+        "Green",
+        "4"
+      ],
+      [
+        "Blue",
+        "3"
+      ],
+      [
+        "Red",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Start in an open, athletic stance with soft knees.",
+      "Let your hips lead; let your chest follow.",
+      "Feel a smooth turn, not a forced twist.",
+      "Send your throw to the target and finish balanced."
+    ]
+  },
+  {
+    "name": "Hookems",
+    "distance": 45,
+    "focus": "Pivot, turn, deliver",
+    "file": "3_hookems",
+    "start": 4.9,
+    "end": 7.5,
+    "balls": [
+      [
+        "Blue",
+        "4"
+      ],
+      [
+        "Red",
+        "3"
+      ],
+      [
+        "Yellow",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Have your coach set the angled plyo and starting position.",
+      "Pivot smoothly, like a controlled pickoff move.",
+      "Let your body turn carry your arm toward the target.",
+      "Stay balanced through release; do not force the arm back."
+    ]
+  },
+  {
+    "name": "Walking Torque",
+    "distance": 60,
+    "focus": "Find a smooth throwing rhythm",
+    "file": "4_walking",
+    "start": 0.5,
+    "end": 3.1,
+    "balls": [
+      [
+        "Blue",
+        "4"
+      ],
+      [
+        "Red",
+        "3"
+      ],
+      [
+        "Yellow",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Walk in with small, relaxed steps.",
+      "Flow into your torque position without rushing.",
+      "Let your hips start the turn; bring your chest through.",
+      "Carry your momentum toward the target, then regain balance."
+    ]
+  },
+  {
+    "name": "Double Crow Hop",
+    "distance": 70,
+    "focus": "Carry momentum to the target",
+    "file": "5_crow",
+    "start": 2.3,
+    "end": 6.1,
+    "balls": [
+      [
+        "Red",
+        "3–5"
+      ],
+      [
+        "Yellow",
+        "3–5"
+      ]
+    ],
+    "cues": [
+      "Use two smooth crow hops toward your partner.",
+      "Keep the hops low and your eyes on the target.",
+      "Let your legs build momentum; do not muscle the throw.",
+      "Finish moving forward under control, not falling sideways."
+    ]
+  },
+  {
+    "name": "Stretch",
+    "distance": 60,
+    "focus": "Bring it into your delivery",
+    "balls": [
+      [
+        "Red",
+        "3"
+      ],
+      [
+        "Yellow",
+        "3"
+      ],
+      [
+        "Gray",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Set your feet and get still in the stretch.",
+      "Lift with balance and keep your head quiet.",
+      "Stride toward your partner and let your body lead the arm.",
+      "Finish in a position you can control."
+    ]
+  },
+  {
+    "name": "Full",
+    "distance": 60,
+    "focus": "Put the whole motion together",
+    "balls": [
+      [
+        "Red",
+        "3"
+      ],
+      [
+        "Yellow",
+        "3"
+      ],
+      [
+        "Gray",
+        "3"
+      ]
+    ],
+    "cues": [
+      "Begin your full delivery with an easy rhythm.",
+      "Keep your head steady as you gather and stride.",
+      "Connect the turn of your body to your arm action.",
+      "Finish balanced and make the next throw look like the last."
+    ]
+  }
+]
