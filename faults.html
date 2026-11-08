@@ -45,6 +45,8 @@
       </div>
     </section>
 
+    <div id="fault-mlb" class="mlb-row" aria-label="MLB examples"></div>
+
     <article class="fault-card" id="fault-directional-side">
       <p class="eyebrow">Fault 01</p>
       <h2>Directional Side</h2>
@@ -152,8 +154,16 @@
     <span>Coach Cameron Cassady</span>
     <small>If something hurts, stop and tell your coach or a parent.</small>
   </footer>
+  <script src="mlb.js"></script>
   <script>
     'use strict';
+    if (window.TerriersMlb) {
+      const picks = TerriersMlb.rotation();
+      document.getElementById('fault-mlb').innerHTML = TerriersMlb.rowHTML([TerriersMlb.RYAN.behind, picks[picks.length - 1]]);
+      TerriersMlb.bind(document);
+      window.addEventListener('scroll', () => requestAnimationFrame(TerriersMlb.sync), { passive: true });
+      TerriersMlb.sync();
+    }
     const nav = document.getElementById('fault-nav');
     const cards = [...document.querySelectorAll('.fault-card')];
     const links = [...nav.querySelectorAll('a')];
