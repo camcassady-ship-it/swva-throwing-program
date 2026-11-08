@@ -68,11 +68,10 @@ window.CATEGORIES = [
 ];
 
 window.STAGES = [
-  { id: 1, numeral: "I", short: "Base", tab: "Precision long toss", title: "Build the Base with Precision Long Toss" },
-  { id: 2, numeral: "II", short: "Intent", tab: "Throw with intent", title: "Learn to Throw with Intent" },
-  { id: 3, numeral: "III", short: "Weighted", tab: "Change the stimulus", title: "Change the Stimulus: Weighted Balls" },
-  { id: 4, numeral: "IV", short: "Blend", tab: "Weighted ball + long toss", title: "Blend Weighted Ball with Extended Long Toss" },
-  { id: 5, numeral: "V", short: "NMF", tab: "NMF blend", title: "NMF Blend with Weighted Ball and Long Toss" }
+  { id: 2, numeral: "2", short: "Intent", tab: "Throw with intent", title: "Learn to Throw with Intent" },
+  { id: 3, numeral: "3", short: "Weighted", tab: "Change the stimulus", title: "Change the Stimulus: Weighted Balls" },
+  { id: 4, numeral: "4", short: "Blend", tab: "Weighted ball + long toss", title: "Blend Weighted Ball with Extended Long Toss" },
+  { id: 5, numeral: "5", short: "NMF", tab: "NMF blend", title: "NMF Blend with Weighted Ball and Long Toss" }
 ];
 
 window.UNIT_NOTE = "Balls go 7.5 oz, then 5 oz, then 3.5 oz.";
@@ -114,7 +113,7 @@ window.PLAN_HTML = {
         </ol>
       </div>
     </div>
-    <div class="progress-check"><b>Advance the distance</b><p>Move farther when 3 of 5 throws are on target. On target means the ball reaches your partner in the air, within reach and one step.</p><small>This 3-of-5 on-target check is for ENHANCE · Stage I. RAMP uses a separate 6-of-9 check. Do not use the RAMP color order on this stage.</small></div>
+    <div class="progress-check"><b>Advance the long toss</b><p>Move farther when 3 of 5 throws are on target. On target means the ball reaches your partner in the air, within reach and one step.</p><small>This 3-of-5 check is for the Stage 1 long toss. The RAMP cards use a separate rule: 6 of 9 catchable with the catcher in his stance, then move up. After 5 rounds, go to the stretch, then the full delivery.</small></div>
   </section>
   <section class="day-block nav-block" id="stage-1-out" data-nav="stage-1-out">
     <p class="eyebrow">Working out</p>
@@ -149,32 +148,32 @@ window.PLAN_HTML = {
     <p class="eyebrow">Medium day</p>
     <h3>75–85% of max distance</h3>
     <ol class="day-list">
-      <li><a href="#stage-1-marshall-1">Marshall 1’s</a></li>
-      <li><a href="#stage-1-torque">Torques</a></li>
-      <li><a href="#stage-1-walking-torque">Walking Torques</a></li>
-      <li><a href="#stage-1-step-behind">Step Behind with Arm Swings</a></li>
+      <li><a href="#drill-1">Marshall 1’s</a></li>
+      <li><a href="#drill-2">Torque</a></li>
+      <li><a href="#drill-4">Walking Torque</a></li>
     </ol>
+    <p class="reps-note">Also used in Stage 1: Step Behind with Arm Swings, on this day. <a href="#stage-2-step-behind">Watch it in ENHANCE · Stage 2</a>.</p>
   </section>
   <section class="day-block nav-block" id="stage-1-max" data-nav="stage-1-max">
     <p class="eyebrow">Max distance day</p>
     <h3>Heavy day</h3>
     <p>Same movements as the medium day, plus Double Crow Hop, then Walking Torques on a line back in.</p>
     <ol class="day-list">
-      <li><a href="#stage-1-marshall-1">Marshall 1’s</a></li>
-      <li><a href="#stage-1-torque">Torques</a></li>
-      <li><a href="#stage-1-walking-torque">Walking Torques</a></li>
-      <li><a href="#stage-1-step-behind">Step Behind with Arm Swings</a></li>
-      <li><a href="#stage-1-double-crow">Double Crow Hop</a></li>
-      <li>Walking Torques on a line back in</li>
+      <li><a href="#drill-1">Marshall 1’s</a></li>
+      <li><a href="#drill-2">Torque</a></li>
+      <li><a href="#drill-4">Walking Torque</a></li>
+      <li><a href="#drill-5">Double Crow Hop</a></li>
+      <li><a href="#drill-4">Walking Torque on a line back in</a></li>
     </ol>
+    <p class="reps-note">Also used in Stage 1: Step Behind with Arm Swings, on this day. <a href="#stage-2-step-behind">Watch it in ENHANCE · Stage 2</a>.</p>
   </section>
   <section class="day-block nav-block" id="stage-1-light" data-nav="stage-1-light">
     <p class="eyebrow">Light day</p>
     <h3>60–65% of max distance</h3>
     <ol class="day-list">
-      <li><a href="#stage-1-marshall-1">Marshall 1’s</a></li>
-      <li><a href="#stage-1-torque">Torques</a></li>
-      <li><a href="#stage-1-walking-torque">Walking Torques</a></li>
+      <li><a href="#drill-1">Marshall 1’s</a></li>
+      <li><a href="#drill-2">Torque</a></li>
+      <li><a href="#drill-4">Walking Torque</a></li>
     </ol>
   </section>`,
   2: `<section class="plan-block nav-block" id="stage-2-plan" data-nav="stage-2-plan">
@@ -220,7 +219,7 @@ window.PLAN_HTML = {
       <li>Alternate weighted-ball days and extended-toss push days.</li>
       <li>Weather may allow 2 weighted-ball days.</li>
     </ul></div>
-    <p>Weighted-ball day: the same five categories, the same balls, the same 1–3 sets, and the same week-by-week throws as ENHANCE · Stage III.</p>
+    <p>Weighted-ball day: the same five categories, the same balls, the same 1–3 sets, and the same week-by-week throws as ENHANCE · Stage 3.</p>
     <div class="callout"><strong>Balls.</strong> ${window.UNIT_NOTE}</div>
   </section>`,
   5: `<section class="plan-block nav-block" id="stage-5-plan" data-nav="stage-5-plan">

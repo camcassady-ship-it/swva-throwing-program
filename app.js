@@ -4,7 +4,8 @@
   const nav = document.getElementById('context-nav');
   const picker = document.querySelector('.stage-picker');
   const { DRILLS, CATEGORIES, STAGES, PLAN_HTML, TOSS_HTML, NMF_INTRO, WB_WAVE_NOTE, STAGE1_NOTE, NMF_DRILLS } = window;
-  const NUMERAL = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
+  const rampPlan = document.getElementById('ramp-plan');
+  if (rampPlan && PLAN_HTML[1]) rampPlan.innerHTML = PLAN_HTML[1];
   if (!panel || !nav || !DRILLS || !picker) return;
 
   let rendered = 0;
@@ -69,7 +70,7 @@
     const cues = drill.cues && drill.cues.length
       ? `<h3 class="cue-heading">Coaching cues</h3><ol class="cues">${drill.cues.map(cue => `<li>${esc(cue)}</li>`).join('')}</ol>`
       : `<h3 class="cue-heading">Cues</h3><p class="reps-note">Ask your coach for the cues on this movement.</p>`;
-    const eyebrow = `ENHANCE · Stage ${NUMERAL[stageId]}${rx.detail ? ` · ${rx.detail}` : ''}`;
+    const eyebrow = `ENHANCE · Stage ${stageId}${rx.detail ? ` · ${rx.detail}` : ''}`;
     const badgeClass = rx.compact ? ' per-coach' : '';
     return `<section class="drill" id="${id}" data-nav="${navId}">
       <div class="drill-heading"><div class="step-number">${esc(drill.mark || '')}</div><div><p class="eyebrow">${esc(eyebrow)}</p><h2>${esc(drill.name)}</h2>${screen}</div><span class="distance${badgeClass}">${esc(rx.badge)}<small>${esc(rx.badgeLabel)}</small></span></div>
@@ -98,18 +99,6 @@
     };
   }
 
-  function baseRx(drillId) {
-    const drill = DRILLS[drillId];
-    return {
-      detail: 'precision long toss',
-      badge: '5 oz',
-      badgeLabel: 'ball',
-      compact: true,
-      chips: [['Movement', drill.name], ['Ball', '5 oz'], ['Working out', '8–10 sets of 3 of 5'], ['Working back in', '3–5 sets of 3 of 5'], ['Start', '20 yards']],
-      note: STAGE1_NOTE[drillId] || 'Ball weight: 5 oz.'
-    };
-  }
-
   function nmfRx(name) {
     return {
       detail: 'NMF · choose one',
@@ -131,11 +120,6 @@
   function stageHTML(stage) {
     const id = stage.id;
     let body = PLAN_HTML[id] || '';
-    if (id === 1) {
-      const cards = ['marshall-1', 'torque', 'walking-torque', 'step-behind', 'double-crow']
-        .map(drillId => drillCard(1, drillId, baseRx(drillId), 'stage-1-movements')).join('');
-      body += `<section class="category nav-block" id="stage-1-movements" data-nav="stage-1-movements"><div class="category-head"><h3>Movements</h3><span class="choose">Watch, then throw</span></div><p class="reps-note">Each movement is listed once. The day lists above say when it is used.</p></section>${cards}`;
-    }
     if (id === 2) body += categoriesHTML(2, intentRx);
     if (id === 3) body += categoriesHTML(3, name => weightedRx(name));
     if (id === 4) {
@@ -163,26 +147,22 @@
     updateTabs();
   }
 
-  function showPrompt() {
-    if (window.releasePlayers) releasePlayers(panel);
-    rendered = 0;
-    panel.innerHTML = '<div class="stage-empty"><p>Choose an ENHANCE stage. The address updates, for example <a href="#stage-3">#stage-3</a>, so you can text that link to a player.</p></div>';
-    updateTabs();
-  }
-
   function updateTabs() {
     const route = parseHash();
+    const selected = route && route.stage >= 2 ? String(route.stage) : (rendered >= 2 ? String(rendered) : '');
     picker.querySelectorAll('[data-stage]').forEach(tab => {
-      const on = route && String(route.stage) === tab.dataset.stage;
-      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.setAttribute('aria-selected', tab.dataset.stage === selected ? 'true' : 'false');
     });
   }
 
   function parseHash() {
     const h = location.hash.replace(/^#/, '');
+    if (h === 'ramp' || h === 'original' || h === 'stage-1') return { stage: 1, target: 'stage-1' };
+    if (h === 'stages' || h === 'enhance') return { stage: 2, target: 'enhance' };
     const match = h.match(/^stage-([1-5])(?:-([\s\S]+))?$/);
     if (!match) return null;
-    return { stage: Number(match[1]), target: h };
+    const stage = Number(match[1]);
+    return { stage, target: h };
   }
 
   function jumpTo(id) {
@@ -206,25 +186,19 @@
   function applyHash(options) {
     const route = parseHash();
     syncOffset();
-    if (!route) {
-      if (!location.hash || location.hash === '#stages' || location.hash === '#enhance' || location.hash === '#top') {
-        if (rendered) showPrompt();
-      }
-      updateTabs();
-      renderNav();
-      if (!(options && options.nosroll)) jumpTo(location.hash.replace(/^#/, ''));
-      return;
-    }
-    if (rendered !== route.stage) renderStage(route.stage);
+    const enhanceStage = route && route.stage >= 2 ? route.stage : (rendered >= 2 ? rendered : 2);
+    if (rendered !== enhanceStage) renderStage(enhanceStage);
     else updateTabs();
     renderNav();
-    if (!(options && options.nosroll)) jumpTo(route.target);
+    if (options && options.nosroll) return;
+    if (route) jumpTo(route.target);
+    else if (location.hash && location.hash !== '#top') jumpTo(location.hash.replace(/^#/, ''));
   }
 
   function currentRegion() {
-    const ramp = document.getElementById('ramp');
-    if (!ramp) return 'stage';
-    return ramp.getBoundingClientRect().top <= stackHeight() + 16 ? 'ramp' : 'stage';
+    const enhance = document.getElementById('enhance');
+    if (!enhance) return 'ramp';
+    return enhance.getBoundingClientRect().top <= stackHeight() + 16 ? 'enhance' : 'ramp';
   }
 
   function renderNav() {
@@ -236,22 +210,20 @@
     navSignature = signature;
     activeKey = '';
     if (region === 'ramp') {
-      nav.setAttribute('aria-label', 'RAMP');
-      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + ORIGINAL_NAV.map(([id, n, label]) => `<a href="#${id}" data-drill="${n}"><span>${n}</span> ${label}</a>`).join('');
-    } else if (route) {
-      nav.setAttribute('aria-label', `ENHANCE · Stage ${NUMERAL[route.stage]}`);
-      const links = stageLinks(route.stage);
-      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + links + '<a href="#ramp">RAMP</a>';
+      nav.setAttribute('aria-label', 'RAMP · Stage 1');
+      const plan = [['stage-1-plan', 'Schedule'], ['stage-1-out', 'Out'], ['stage-1-in', 'Back in'], ['stage-1-position', '40 & 20'], ['stage-1-pitchers', 'Pitchers'], ['stage-1-medium', 'Medium'], ['stage-1-max', 'Max'], ['stage-1-light', 'Light']]
+        .map(([id, label]) => `<a href="#${id}">${label}</a>`).join('');
+      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + plan + ORIGINAL_NAV.map(([id, n, label]) => `<a href="#${id}" data-drill="${n}"><span>${n}</span> ${label}</a>`).join('');
     } else {
-      nav.setAttribute('aria-label', 'ENHANCE');
-      nav.innerHTML = STAGES.map(stage => `<a href="#stage-${stage.id}"><span>${stage.numeral}</span> ${esc(stage.short)}</a>`).join('') + '<a href="#ramp">RAMP</a>';
+      const stage = route && route.stage >= 2 ? route.stage : (rendered >= 2 ? rendered : 2);
+      nav.setAttribute('aria-label', `ENHANCE · Stage ${stage}`);
+      nav.innerHTML = '<a href="#ramp">RAMP</a>' + stageLinks(stage);
     }
     updateReviews();
   }
 
   function stageLinks(id) {
     const map = {
-      1: [['stage-1-plan', 'Plan'], ['stage-1-out', 'Out'], ['stage-1-in', 'Back in'], ['stage-1-position', '40 & 20'], ['stage-1-pitchers', 'Pitchers'], ['stage-1-medium', 'Medium'], ['stage-1-max', 'Max'], ['stage-1-light', 'Light'], ['stage-1-movements', 'Movements']],
       2: [['stage-2-plan', 'Plan'], ['stage-2-decel', 'Decel'], ['stage-2-connection', 'Connection'], ['stage-2-arm-action', 'Arm action'], ['stage-2-lower-half', 'Lower half'], ['stage-2-athleticism', 'Athleticism']],
       3: [['stage-3-plan', 'Plan'], ['stage-3-decel', 'Decel'], ['stage-3-connection', 'Connection'], ['stage-3-arm-action', 'Arm action'], ['stage-3-lower-half', 'Lower half'], ['stage-3-athleticism', 'Athleticism']],
       4: [['stage-4-plan', 'Plan'], ['stage-4-decel', 'Decel'], ['stage-4-connection', 'Connection'], ['stage-4-arm-action', 'Arm action'], ['stage-4-lower-half', 'Lower half'], ['stage-4-athleticism', 'Athleticism'], ['stage-4-toss', 'Long toss']],
@@ -265,10 +237,10 @@
     const region = currentRegion();
     let key = '';
     if (region === 'ramp') {
-      const sections = [...document.querySelectorAll('#ramp .drill')];
+      const sections = [...document.querySelectorAll('#stage-1 .nav-block, #stage-1 .drill')];
       let active = sections[0];
       sections.forEach(section => { if (section.getBoundingClientRect().top <= line) active = section; });
-      key = active ? active.id : '';
+      key = active ? (active.dataset.nav || active.id) : '';
     } else {
       const nodes = [...document.querySelectorAll('#stage-panel .nav-block, #stage-panel .drill')];
       let active = null;
@@ -278,7 +250,7 @@
     nav.querySelectorAll('a').forEach(link => {
       const on = key && link.hash === `#${key}`;
       link.classList.toggle('active', on);
-      if (on) link.setAttribute('aria-current', region === 'ramp' ? 'step' : 'true');
+      if (on) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
     });
     if (key && key !== activeKey) {

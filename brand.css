@@ -82,7 +82,9 @@ h1 em { color: #f26a2e; }
   margin: 14px 0;
 }
 .supervision strong, .callout strong { color: #fff8ef; }
-.stage-picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 8px 0 18px; }
+.stage-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 8px 0 18px; }
+.program-path { color: #ffc9ad; font-weight: 750; margin: 0 0 12px; }
+.program-path a { color: #fff8ef; font-weight: 800; }
 .stage-picker a {
   display: flex;
   flex-direction: column;
@@ -205,7 +207,6 @@ h1 em { color: #f26a2e; }
 
 @media (max-width: 900px) {
   .stage-picker { grid-template-columns: 1fr 1fr; }
-  .stage-picker a:last-child { grid-column: 1 / -1; }
 }
 @media (max-width: 640px) {
   .stage-picker, .plan-grid, .fault-grid { grid-template-columns: 1fr; }
