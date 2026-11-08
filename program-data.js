@@ -86,9 +86,9 @@ window.PLAN_HTML = {
         <li>Or 4 days a week, 24 sessions.</li>
       </ul></div>
       <div class="plan-card"><h3>Distance cycle</h3><ul>
-        <li>Medium: 75–85% of max distance.</li>
-        <li>Max distance, also called a heavy day.</li>
         <li>Light: 60–65% of max distance.</li>
+        <li>Medium: 75–85% of max distance.</li>
+        <li>Hard: max distance.</li>
       </ul></div>
     </div>
     <div class="callout"><strong>Two session counts.</strong> Ask your coach which one to follow. Ball weight: 5 oz.</div>
@@ -155,8 +155,8 @@ window.PLAN_HTML = {
     <p class="reps-note">Also used in Stage 1: Step Behind with Arm Swings, on this day. <a href="#stage-2-step-behind">Watch it in ENHANCE · Stage 2</a>.</p>
   </section>
   <section class="day-block nav-block" id="stage-1-max" data-nav="stage-1-max">
-    <p class="eyebrow">Max distance day</p>
-    <h3>Heavy day</h3>
+    <p class="eyebrow">Hard day</p>
+    <h3>Max distance</h3>
     <p>Same movements as the medium day, plus Double Crow Hop, then Walking Torques on a line back in.</p>
     <ol class="day-list">
       <li><a href="#drill-1">Marshall 1’s</a></li>
@@ -269,11 +269,11 @@ window.WB_WAVE_NOTE = `<section class="plan-block nav-block" id="stage-5-wb" dat
 </section>`;
 
 window.STAGE1_NOTE = {
-  "marshall-1": "Used on the medium day, the max-distance day, and the light day. Ball weight: 5 oz.",
-  "torque": "Used on the medium day, the max-distance day, and the light day. Ball weight: 5 oz.",
-  "walking-torque": "Used on the medium day, the max-distance day, and the light day. On the max-distance day, Walking Torques on a line back in comes after Double Crow Hop. Ball weight: 5 oz.",
-  "step-behind": "Used on the medium day and the max-distance day. Not listed on the light day. Ball weight: 5 oz.",
-  "double-crow": "Max-distance day only, after the medium-day movements. Walking Torques on a line back in comes after it. Ball weight: 5 oz."
+  "marshall-1": "Used on the light day, the medium day, and the hard day. Ball weight: 5 oz.",
+  "torque": "Used on the light day, the medium day, and the hard day. Ball weight: 5 oz.",
+  "walking-torque": "Used on the light day, the medium day, and the hard day. On the hard day, Walking Torque on a line back in comes after Double Crow Hop. Ball weight: 5 oz.",
+  "step-behind": "Used on the medium day and the hard day. Not listed on the light day. Ball weight: 5 oz.",
+  "double-crow": "Hard day only, after the medium-day movements. Walking Torque on a line back in comes after it. Ball weight: 5 oz."
 };
 
 window.NMF_DRILLS = ["walking-torque", "double-plays", "double-crow", "turn-and-burns", "step-behind"];
