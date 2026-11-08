@@ -40,7 +40,7 @@
 
   function playerHTML(drill, label) {
     if (!drill.file) {
-      return `<div class="text-demo"><div class="diamond" aria-hidden="true"><span>${esc(drill.mark || '—')}</span></div><p class="eyebrow">No clip supplied</p><h3>${esc(drill.name)}</h3><p>No demonstration video was included for this movement. Ask your coach to show it before you throw.</p><div class="text-note">Watch your coach, then throw only what is on the card.</div></div>`;
+      return `<div class="text-demo"><div class="diamond" aria-hidden="true"><span>${esc(drill.mark || '—')}</span></div><p class="eyebrow">With your coach</p><h3>${esc(drill.name)}</h3><p>Ask your coach to show this movement before you throw.</p><div class="text-note">Watch your coach, then throw only what is on the card.</div></div>`;
     }
     vidSeq += 1;
     const vid = `video-s${vidSeq}`;
@@ -67,7 +67,7 @@
     const blurb = drill.blurb ? `<p class="reps-note">${esc(drill.blurb)}</p>` : '';
     return `<section class="drill" id="${id}" data-nav="${navId}">
       <div class="drill-heading"><div class="step-number">${esc(drill.mark || '')}</div><div><p class="eyebrow">${esc(rx.eyebrow)}</p><h2>${esc(drill.name)}</h2>${screen}</div><span class="distance per-coach">${esc(rx.badge)}<small>${esc(rx.badgeLabel)}</small></span></div>
-      <div class="drill-grid">${playerHTML(drill, drill.name)}<div class="drill-instructions"><h3>This stage</h3>${chips(rx.chips)}<p class="reps-note">${esc(rx.note)}</p>${alias}${blurb}${original}<h3 class="cue-heading">Cues</h3><p class="reps-note">Per coach. The stage documents do not list cues for this movement.</p></div></div>
+      <div class="drill-grid">${playerHTML(drill, drill.name)}<div class="drill-instructions"><h3>This stage</h3>${chips(rx.chips)}<p class="reps-note">${esc(rx.note)}</p>${alias}${blurb}${original}<h3 class="cue-heading">Cues</h3><p class="reps-note">Ask your coach for the cues on this movement.</p></div></div>
     </section>`;
   }
 
@@ -76,8 +76,8 @@
       eyebrow: 'Stage II · one choice in this category',
       badge: '5',
       badgeLabel: 'throws',
-      chips: [['Movement', name], ['Ball', '5 oz'], ['Throws', '5'], ['Sets', 'Not given'], ['Distance', 'Per coach']],
-      note: 'Choose one drill in this category. No separate set count is given. Distance is per coach.'
+      chips: [['Movement', name], ['Ball', '5 oz'], ['Throws', '5'], ['Sets', 'Ask your coach'], ['Distance', 'Ask your coach']],
+      note: 'Choose one drill in this category. Ask your coach about sets and distance.'
     };
   }
 
@@ -87,7 +87,7 @@
       badge: '3 balls',
       badgeLabel: 'heavy to light',
       chips: [['Movement', name], ['Balls', '7.5, then 5 oz, then 3.5'], ['Week 1', '3 throws per ball'], ['Week 2', '4 throws per ball'], ['Week 3', '5 throws per ball']],
-      note: `Throws are per drill, per ball. No set count is given. No distance is given. ${UNIT_NOTE}${extra || ''}`
+      note: `Throws are per drill, per ball. Ask your coach about sets and distance. ${UNIT_NOTE}${extra || ''}`
     };
   }
 
@@ -107,8 +107,8 @@
       eyebrow: 'Stage V · NMF · choose one',
       badge: '15',
       badgeLabel: 'throws',
-      chips: [['Movement', name], ['Each ball', '5 throws'], ['Balls', '7.5, 5, 3.5'], ['Total', '15 throws'], ['Effort', 'Max, as written']],
-      note: `Choose one of the five movements. Five throws of each listed ball is 15 throws, as written. ${UNIT_NOTE} Max effort here is coach-gated advanced work, not a plan for every youth player.`
+      chips: [['Movement', name], ['Each ball', '5 throws'], ['Balls', '7.5, 5, 3.5'], ['Total', '15 throws'], ['Effort', 'Max']],
+      note: `Choose one of the five movements. Five throws of each ball is 15 throws. ${UNIT_NOTE} Ask your coach before max-effort work. It is not a plan for every player.`
     };
   }
 
@@ -138,7 +138,7 @@
       body += NMF_INTRO;
       body += NMF_DRILLS.map(drillId => drillCard(5, drillId, nmfRx(DRILLS[drillId].name), 'stage-5-nmf', `stage-5-nmf-${drillId}`)).join('');
       body += WB_WAVE_NOTE;
-      body += categoriesHTML(5, name => weightedRx(name, ' Nothing says to repeat the week 1–3 wave across the 9 weeks. Per coach.'));
+      body += categoriesHTML(5, name => weightedRx(name, ' Ask your coach whether to repeat the week 1–3 counts across the 9 weeks.'));
       body += TOSS_HTML.replaceAll('TOSS_ID', 'stage-5-toss');
     }
     return `<article class="stage-plan" id="stage-${id}"><p class="eyebrow">Stage ${esc(stage.numeral)}</p><h2>${esc(stage.title)}</h2>${body}</article>`;
