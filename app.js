@@ -177,10 +177,10 @@
       sheet.hidden = sheet.dataset.daySheet !== day;
     });
     document.querySelectorAll('[data-day-pro]').forEach(panel => {
-      const video = panel.querySelector('video');
       panel.hidden = panel.dataset.dayPro !== day;
-      if (panel.hidden && video) video.pause();
+      if (panel.hidden) panel.querySelectorAll('video').forEach(video => video.pause());
     });
+    syncMlb();
     const hash = location.hash.replace(/^#/, '');
     document.querySelectorAll('#stage-1 .drill').forEach(card => {
       const days = (card.dataset.days || '').split(/\s+/);
@@ -337,9 +337,61 @@
       renderNav();
       if (nav.dataset.signature === before) highlightNav();
       else highlightNav();
+      syncMlb();
       scrollPending = false;
     });
   }, { passive: true });
+
+  function syncMlb() {
+    const clips = [...document.querySelectorAll('.mlb-clip video')];
+    let best = null;
+    let bestRatio = 0;
+    const viewport = window.innerHeight || 800;
+    clips.forEach(video => {
+      if (video.closest('[hidden]')) {
+        video.pause();
+        return;
+      }
+      const box = video.getBoundingClientRect();
+      const visible = Math.min(box.bottom, viewport) - Math.max(box.top, 0);
+      const ratio = box.height > 0 ? visible / box.height : 0;
+      if (ratio > bestRatio) {
+        bestRatio = ratio;
+        best = video;
+      }
+    });
+    clips.forEach(video => {
+      const keep = video === best && bestRatio >= 0.55 && video.dataset.userPaused !== '1' && !video.closest('[hidden]');
+      if (!keep) video.pause();
+    });
+    if (best && bestRatio >= 0.55 && best.dataset.userPaused !== '1' && !best.closest('[hidden]')) {
+      const pending = best.play();
+      if (pending) pending.catch(() => {});
+    }
+  }
+
+  document.querySelectorAll('.mlb-row').forEach(row => {
+    row.addEventListener('scroll', () => requestAnimationFrame(syncMlb), { passive: true });
+  });
+
+  document.querySelectorAll('.mlb-clip video').forEach(video => {
+    video.addEventListener('click', () => {
+      if (!video.paused) {
+        video.dataset.userPaused = '1';
+        video.pause();
+        return;
+      }
+      document.querySelectorAll('.mlb-clip video').forEach(other => {
+        if (other !== video) {
+          other.pause();
+          other.dataset.userPaused = '1';
+        }
+      });
+      video.dataset.userPaused = '0';
+      const pending = video.play();
+      if (pending) pending.catch(() => {});
+    });
+  });
 
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.addEventListener('hashchange', () => applyHash());
