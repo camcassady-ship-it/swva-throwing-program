@@ -269,6 +269,9 @@ h1 em { color: #f26a2e; }
 .fault-panel h3 { font-size: 13px; letter-spacing: 0.8px; text-transform: uppercase; color: #ffc9ad; margin-bottom: 8px; }
 .fault-panel p, .fault-panel li { color: #f6e7df; font-size: 15px; }
 .routine { margin: 8px 0 12px; padding-left: 20px; }
+.routine-demo { margin: 8px 0 4px; }
+.routine-demo > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 750; color: #fff8ef; }
+.routine-demo .player { margin: 8px 0 12px; }
 .routine li { margin: 0 0 8px; }
 .coming-line { font-weight: 750; color: #fff8ef; }
 
