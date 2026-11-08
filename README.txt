@@ -1,7 +1,8 @@
-SWVA ELEVATED THROWING PROGRESSION
+WILLIAM BYRD BASEBALL THROWING PROGRAM
 
-Open index.html in a modern browser. All five demonstration videos, posters,
-and key-move clips are included; there are no external fonts or video embeds.
+Open index.html in a modern browser. Pick a stage (#stage-1 through #stage-5)
+or open faults.html. Demonstration videos, posters, and the Terriers wordmark
+font are included. No build step.
 No login, analytics, cookies, payment code, or build step is required.
 Review marks use browser local storage only. No player data is sent anywhere.
 
