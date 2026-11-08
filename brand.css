@@ -272,6 +272,27 @@ h1 em { color: #f26a2e; }
 .routine-demo { margin: 8px 0 4px; }
 .routine-demo > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 750; color: #fff8ef; }
 .routine-demo .player { margin: 8px 0 12px; }
+.fault-habit {
+  border-left: 4px solid #f26a2e;
+  background: #3d181c;
+  padding: 14px 16px;
+  border-radius: 0 10px 10px 0;
+  color: #fff8ef;
+  font-weight: 700;
+  margin: 8px 0 18px;
+}
+.key-moments { margin-top: 8px; }
+.key-clip { margin: 0 0 18px; }
+.key-clip video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #1a0c0e;
+  border-radius: 8px;
+}
+.key-clip figcaption b { display: block; margin-top: 8px; font-size: 16px; }
+.key-clip figcaption p { margin: 4px 0 0; }
+.key-credit { font-size: 12px; color: #ffc9ad; margin: 0 0 8px; }
 .routine li { margin: 0 0 8px; }
 .coming-line { font-weight: 750; color: #fff8ef; }
 
