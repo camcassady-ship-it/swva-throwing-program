@@ -31,7 +31,7 @@ The supplied deck's distances and color-specific sets are retained. The deck
 has ambiguous wording ('after 5 rounds', a 6/9 check vs 6-10 throws for one
 step). The expanded coach notes explain that the coach must define those
 limits; do not add test throws or assume five full circuits.
-No exact plyo-ball weights are inferred. Coach approval, youth-appropriate
+RAMP colors and any other ball with no listed weight are shown as 5 oz. 7.5, 5, and 3.5 are ounces. Coach approval, youth-appropriate
 workload and individualized supervision are required. Stop for pain.
 Added cues are teaching prompts, not medical advice or video transcriptions.
 Stretch and Full have no source videos and are deliberately text-only.

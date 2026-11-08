@@ -3,7 +3,8 @@
   const panel = document.getElementById('stage-panel');
   const nav = document.getElementById('context-nav');
   const picker = document.querySelector('.stage-picker');
-  const { DRILLS, CATEGORIES, STAGES, PLAN_HTML, TOSS_HTML, NMF_INTRO, WB_WAVE_NOTE, STAGE1_NOTE, NMF_DRILLS, UNIT_NOTE } = window;
+  const { DRILLS, CATEGORIES, STAGES, PLAN_HTML, TOSS_HTML, NMF_INTRO, WB_WAVE_NOTE, STAGE1_NOTE, NMF_DRILLS } = window;
+  const NUMERAL = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
   if (!panel || !nav || !DRILLS || !picker) return;
 
   let rendered = 0;
@@ -63,52 +64,59 @@
     const id = domId || `stage-${stageId}-${drillId}`;
     const screen = drill.screen ? `<p class="screen-title">On-screen title: ${esc(drill.screen)}</p>` : '';
     const alias = drill.alias ? `<p class="reps-note">${esc(drill.alias)}</p>` : '';
-    const original = drill.original ? `<p class="also"><a href="#${drill.original}">Original color progression card</a></p>` : '';
+    const original = drill.original ? `<p class="also"><a href="#${drill.original}">RAMP card</a></p>` : '';
     const blurb = drill.blurb ? `<p class="reps-note">${esc(drill.blurb)}</p>` : '';
+    const cues = drill.cues && drill.cues.length
+      ? `<h3 class="cue-heading">Coaching cues</h3><ol class="cues">${drill.cues.map(cue => `<li>${esc(cue)}</li>`).join('')}</ol>`
+      : `<h3 class="cue-heading">Cues</h3><p class="reps-note">Ask your coach for the cues on this movement.</p>`;
+    const eyebrow = `ENHANCE · Stage ${NUMERAL[stageId]}${rx.detail ? ` · ${rx.detail}` : ''}`;
+    const badgeClass = rx.compact ? ' per-coach' : '';
     return `<section class="drill" id="${id}" data-nav="${navId}">
-      <div class="drill-heading"><div class="step-number">${esc(drill.mark || '')}</div><div><p class="eyebrow">${esc(rx.eyebrow)}</p><h2>${esc(drill.name)}</h2>${screen}</div><span class="distance per-coach">${esc(rx.badge)}<small>${esc(rx.badgeLabel)}</small></span></div>
-      <div class="drill-grid">${playerHTML(drill, drill.name)}<div class="drill-instructions"><h3>This stage</h3>${chips(rx.chips)}<p class="reps-note">${esc(rx.note)}</p>${alias}${blurb}${original}<h3 class="cue-heading">Cues</h3><p class="reps-note">Ask your coach for the cues on this movement.</p></div></div>
+      <div class="drill-heading"><div class="step-number">${esc(drill.mark || '')}</div><div><p class="eyebrow">${esc(eyebrow)}</p><h2>${esc(drill.name)}</h2>${screen}</div><span class="distance${badgeClass}">${esc(rx.badge)}<small>${esc(rx.badgeLabel)}</small></span></div>
+      <div class="drill-grid">${playerHTML(drill, drill.name)}<div class="drill-instructions"><h3>This stage</h3>${chips(rx.chips)}<p class="reps-note">${esc(rx.note)}</p>${alias}${blurb}${original}${cues}</div></div>
     </section>`;
   }
 
   function intentRx(name) {
     return {
-      eyebrow: 'Stage II · one choice in this category',
+      detail: 'one choice in this category',
       badge: '5',
       badgeLabel: 'throws',
-      chips: [['Movement', name], ['Ball', '5 oz'], ['Throws', '5'], ['Sets', 'Ask your coach'], ['Distance', 'Ask your coach']],
-      note: 'Choose one drill in this category. Ask your coach about sets and distance.'
+      chips: [['Movement', name], ['Ball', '5 oz'], ['Throws', '5'], ['Sets', '1–3'], ['Distance', 'Ask your coach']],
+      note: 'Choose one drill in this category. Ask your coach for the distance.'
     };
   }
 
   function weightedRx(name, extra) {
     return {
-      eyebrow: 'Weighted ball · one choice in this category',
+      detail: 'one choice in this category',
       badge: '3 balls',
       badgeLabel: 'heavy to light',
-      chips: [['Movement', name], ['Balls', '7.5, then 5 oz, then 3.5'], ['Week 1', '3 throws per ball'], ['Week 2', '4 throws per ball'], ['Week 3', '5 throws per ball']],
-      note: `Throws are per drill, per ball. Ask your coach about sets and distance. ${UNIT_NOTE}${extra || ''}`
+      compact: true,
+      chips: [['Movement', name], ['Balls', '7.5 oz, then 5 oz, then 3.5 oz'], ['Sets', '1–3'], ['Week 1', '3 throws per ball'], ['Week 2', '4 throws per ball'], ['Week 3', '5 throws per ball']],
+      note: `Throws are per drill, per ball. Ask your coach for the distance.${extra || ''}`
     };
   }
 
   function baseRx(drillId) {
     const drill = DRILLS[drillId];
     return {
-      eyebrow: 'Stage I · precision long toss',
-      badge: 'Per coach',
-      badgeLabel: 'weight / reps',
-      chips: [['Movement', drill.name], ['Ball weight', 'Per coach'], ['Sets / reps', 'Per coach'], ['Feet', 'Per coach']],
-      note: STAGE1_NOTE[drillId] || 'Per coach.'
+      detail: 'precision long toss',
+      badge: '5 oz',
+      badgeLabel: 'ball',
+      compact: true,
+      chips: [['Movement', drill.name], ['Ball', '5 oz'], ['Working out', '8–10 sets of 3 of 5'], ['Working back in', '3–5 sets of 3 of 5'], ['Start', '20 yards']],
+      note: STAGE1_NOTE[drillId] || 'Ball weight: 5 oz.'
     };
   }
 
   function nmfRx(name) {
     return {
-      eyebrow: 'Stage V · NMF · choose one',
+      detail: 'NMF · choose one',
       badge: '15',
       badgeLabel: 'throws',
-      chips: [['Movement', name], ['Each ball', '5 throws'], ['Balls', '7.5, 5, 3.5'], ['Total', '15 throws'], ['Effort', 'Max']],
-      note: `Choose one of the five movements. Five throws of each ball is 15 throws. ${UNIT_NOTE} Ask your coach before max-effort work. It is not a plan for every player.`
+      chips: [['Movement', name], ['Each ball', '5 throws'], ['Balls', '7.5 oz, 5 oz, 3.5 oz'], ['Total', '15 throws'], ['Effort', 'Max']],
+      note: 'Choose one of the five movements. Five throws of each ball is 15 throws. Ask your coach before max-effort work. It is not a plan for every player.'
     };
   }
 
@@ -141,7 +149,7 @@
       body += categoriesHTML(5, name => weightedRx(name, ' Ask your coach whether to repeat the week 1–3 counts across the 9 weeks.'));
       body += TOSS_HTML.replaceAll('TOSS_ID', 'stage-5-toss');
     }
-    return `<article class="stage-plan" id="stage-${id}"><p class="eyebrow">Stage ${esc(stage.numeral)}</p><h2>${esc(stage.title)}</h2>${body}</article>`;
+    return `<article class="stage-plan" id="stage-${id}"><p class="eyebrow">ENHANCE · Stage ${esc(stage.numeral)}</p><h2>${esc(stage.title)}</h2>${body}</article>`;
   }
 
   function renderStage(id) {
@@ -158,7 +166,7 @@
   function showPrompt() {
     if (window.releasePlayers) releasePlayers(panel);
     rendered = 0;
-    panel.innerHTML = '<div class="stage-empty"><p>Choose a stage. The address updates, for example <a href="#stage-3">#stage-3</a>, so you can text that link to a player.</p></div>';
+    panel.innerHTML = '<div class="stage-empty"><p>Choose an ENHANCE stage. The address updates, for example <a href="#stage-3">#stage-3</a>, so you can text that link to a player.</p></div>';
     updateTabs();
   }
 
@@ -185,14 +193,21 @@
       window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
     };
     jump();
-    requestAnimationFrame(() => { jump(); requestAnimationFrame(jump); });
+    requestAnimationFrame(() => {
+      jump();
+      requestAnimationFrame(() => {
+        jump();
+        renderNav();
+        highlightNav();
+      });
+    });
   }
 
   function applyHash(options) {
     const route = parseHash();
     syncOffset();
     if (!route) {
-      if (!location.hash || location.hash === '#stages' || location.hash === '#top') {
+      if (!location.hash || location.hash === '#stages' || location.hash === '#enhance' || location.hash === '#top') {
         if (rendered) showPrompt();
       }
       updateTabs();
@@ -207,9 +222,9 @@
   }
 
   function currentRegion() {
-    const original = document.getElementById('original');
-    if (!original) return 'stage';
-    return original.getBoundingClientRect().top <= stackHeight() + 8 ? 'original' : 'stage';
+    const ramp = document.getElementById('ramp');
+    if (!ramp) return 'stage';
+    return ramp.getBoundingClientRect().top <= stackHeight() + 16 ? 'ramp' : 'stage';
   }
 
   function renderNav() {
@@ -220,23 +235,23 @@
     nav.dataset.signature = signature;
     navSignature = signature;
     activeKey = '';
-    if (region === 'original') {
-      nav.setAttribute('aria-label', 'Original color progression');
-      nav.innerHTML = '<a href="#stages">Stages</a>' + ORIGINAL_NAV.map(([id, n, label]) => `<a href="#${id}" data-drill="${n}"><span>${n}</span> ${label}</a>`).join('');
+    if (region === 'ramp') {
+      nav.setAttribute('aria-label', 'RAMP');
+      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + ORIGINAL_NAV.map(([id, n, label]) => `<a href="#${id}" data-drill="${n}"><span>${n}</span> ${label}</a>`).join('');
     } else if (route) {
-      nav.setAttribute('aria-label', `Stage ${route.stage}`);
+      nav.setAttribute('aria-label', `ENHANCE · Stage ${NUMERAL[route.stage]}`);
       const links = stageLinks(route.stage);
-      nav.innerHTML = '<a href="#stages">Stages</a>' + links + '<a href="#original">Original</a>';
+      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + links + '<a href="#ramp">RAMP</a>';
     } else {
-      nav.setAttribute('aria-label', 'Program stages');
-      nav.innerHTML = STAGES.map(stage => `<a href="#stage-${stage.id}"><span>${stage.numeral}</span> ${esc(stage.short)}</a>`).join('') + '<a href="#original">Original</a>';
+      nav.setAttribute('aria-label', 'ENHANCE');
+      nav.innerHTML = STAGES.map(stage => `<a href="#stage-${stage.id}"><span>${stage.numeral}</span> ${esc(stage.short)}</a>`).join('') + '<a href="#ramp">RAMP</a>';
     }
     updateReviews();
   }
 
   function stageLinks(id) {
     const map = {
-      1: [['stage-1-plan', 'Plan'], ['stage-1-medium', 'Medium'], ['stage-1-max', 'Max distance'], ['stage-1-light', 'Light'], ['stage-1-movements', 'Movements']],
+      1: [['stage-1-plan', 'Plan'], ['stage-1-out', 'Out'], ['stage-1-in', 'Back in'], ['stage-1-position', '40 & 20'], ['stage-1-pitchers', 'Pitchers'], ['stage-1-medium', 'Medium'], ['stage-1-max', 'Max'], ['stage-1-light', 'Light'], ['stage-1-movements', 'Movements']],
       2: [['stage-2-plan', 'Plan'], ['stage-2-decel', 'Decel'], ['stage-2-connection', 'Connection'], ['stage-2-arm-action', 'Arm action'], ['stage-2-lower-half', 'Lower half'], ['stage-2-athleticism', 'Athleticism']],
       3: [['stage-3-plan', 'Plan'], ['stage-3-decel', 'Decel'], ['stage-3-connection', 'Connection'], ['stage-3-arm-action', 'Arm action'], ['stage-3-lower-half', 'Lower half'], ['stage-3-athleticism', 'Athleticism']],
       4: [['stage-4-plan', 'Plan'], ['stage-4-decel', 'Decel'], ['stage-4-connection', 'Connection'], ['stage-4-arm-action', 'Arm action'], ['stage-4-lower-half', 'Lower half'], ['stage-4-athleticism', 'Athleticism'], ['stage-4-toss', 'Long toss']],
@@ -249,8 +264,8 @@
     const line = stackHeight() + 24;
     const region = currentRegion();
     let key = '';
-    if (region === 'original') {
-      const sections = [...document.querySelectorAll('#original .drill')];
+    if (region === 'ramp') {
+      const sections = [...document.querySelectorAll('#ramp .drill')];
       let active = sections[0];
       sections.forEach(section => { if (section.getBoundingClientRect().top <= line) active = section; });
       key = active ? active.id : '';
@@ -263,7 +278,7 @@
     nav.querySelectorAll('a').forEach(link => {
       const on = key && link.hash === `#${key}`;
       link.classList.toggle('active', on);
-      if (on) link.setAttribute('aria-current', region === 'original' ? 'step' : 'true');
+      if (on) link.setAttribute('aria-current', region === 'ramp' ? 'step' : 'true');
       else link.removeAttribute('aria-current');
     });
     if (key && key !== activeKey) {
