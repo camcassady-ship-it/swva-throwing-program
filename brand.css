@@ -120,11 +120,37 @@ h1 em { color: #f26a2e; }
   color: #fff8ef;
 }
 .day-selector a[aria-selected="true"] { background: #f26a2e; color: #3d181c; border-color: #f26a2e; }
-.day-sheet, .day-pro { margin: 0 0 16px; }
+.day-sheet { margin: 0 0 16px; }
 .day-sheet h2 { font-size: clamp(26px, 6vw, 36px); letter-spacing: -0.6px; margin: 0 0 8px; }
 .day-sheet h3 { font-size: 15px; margin: 12px 0 6px; }
-.day-pro figcaption b { display: block; font-size: 18px; }
-.day-pro figcaption small { color: #f6e7df; }
+.mlb-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 0 16px;
+  padding-bottom: 6px;
+}
+.mlb-row[hidden] { display: none; }
+.mlb-clip {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+  margin: 0;
+  max-width: 320px;
+}
+.mlb-clip figcaption b { display: block; font-size: 16px; line-height: 1.2; }
+.mlb-clip figcaption small { color: #f6e7df; font-size: 12px; }
+.mlb-clip video {
+  width: 100%;
+  max-height: 210px;
+  margin-top: 6px;
+  object-fit: contain;
+  background: #1a0c0e;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.mlb-clip.is-small { max-width: 226px; }
+.mlb-clip.is-small video { width: 226px; max-width: 100%; height: auto; max-height: none; }
 .review-line { color: #ffc9ad; font-size: 13px; font-weight: 750; letter-spacing: 0.04em; text-transform: uppercase; }
 .stage-picker a {
   display: flex;
