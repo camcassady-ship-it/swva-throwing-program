@@ -12,8 +12,8 @@ window.DRILLS = {
       "Finish under control. Reset before the next throw."
     ]
   },
-  "marshall-2": { name: "Marshall 2’s", mark: "M2", blurb: "Ask your coach to show Marshall 2’s before you throw." },
-  "decel": { name: "Decel", mark: "D", blurb: "Ask your coach if Decel is its own movement, or if it is Marshall 1’s and Marshall 2’s." },
+  "marshall-2": { name: "Marshall 2’s", mark: "M2", file: "assets/marshall2_demo.mp4", poster: "assets/marshall2_demo.jpg", start: 0, end: 3.15, blurb: "Watch the demo, then throw." },
+  "decel": { name: "Decel", mark: "D", file: "assets/decel_demo.mp4", poster: "assets/decel_demo.jpg", start: 0, end: 2.8, blurb: "Decel demo. Pairs with Marshall 1’s and Marshall 2’s." },
   "torque": {
     name: "Torques", mark: "T", file: "assets/2_torque.mp4", poster: "assets/2_torque.jpg", key: "assets/2_torque_key.mp4", start: 1.1, end: 3.2, original: "drill-2", alias: "Called Torque on RAMP.",
     cues: [
