@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#4a1f24"/>
-  <g transform="translate(12 7) scale(0.36)">
-    <path fill="#fff6ea" stroke="#fff6ea" stroke-width="4.5" stroke-linejoin="miter" fill-rule="evenodd" d="M8 4 H40 V12 H48 C78 12 92 24 92 46 C92 64 78 74 52 78 C82 82 102 96 102 122 C102 144 78 152 44 152 H40 V148 H8 V132 H18 V24 H8 Z M36 28 H50 C66 28 72 36 72 46 C72 58 62 64 46 66 H36 Z M36 94 H54 C74 94 80 106 80 120 C80 134 68 140 50 140 H36 Z"/>
-    <path fill="#f26a2e" fill-rule="evenodd" d="M8 4 H40 V12 H48 C78 12 92 24 92 46 C92 64 78 74 52 78 C82 82 102 96 102 122 C102 144 78 152 44 152 H40 V148 H8 V132 H18 V24 H8 Z M36 28 H50 C66 28 72 36 72 46 C72 58 62 64 46 66 H36 Z M36 94 H54 C74 94 80 106 80 120 C80 134 68 140 50 140 H36 Z"/>
-  </g>
-</svg>

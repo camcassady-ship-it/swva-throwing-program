@@ -27,7 +27,7 @@ body {
 .sticky-stack .site-header { position: relative; top: auto; height: auto; min-height: 0; flex-wrap: wrap; gap: 8px 14px; }
 .sticky-stack .drill-nav { position: relative; top: auto; height: auto; min-height: 52px; background: #3d181cf2; }
 
-.brand img { width: 36px; height: 48px; display: block; }
+.brand img { width: auto; height: 46px; display: block; }
 .brand .wordmark { font-size: 22px; display: block; }
 .brand small { letter-spacing: 0.4px; font-size: 10px; text-transform: none; color: #f6e7df; font-weight: 650; }
 
@@ -67,7 +67,7 @@ h1 em { color: #f26a2e; }
   overflow: visible;
   padding: 28px 16px;
 }
-.hero-mark { width: min(42%, 168px); height: auto; }
+.hero-mark { width: min(36%, 129px); height: auto; }
 .hero-art .art-label { position: static; text-align: center; margin-top: 8px; }
 .hero-word { font-size: clamp(36px, 8vw, 64px); }
 
@@ -186,7 +186,7 @@ h1 em { color: #f26a2e; }
   .stage-picker a, .stage-picker a:last-child { grid-column: auto; min-height: 72px; }
   .fault-panel.fix { grid-column: auto; }
   .brand .wordmark { font-size: 18px; }
-  .brand img { width: 30px; height: 40px; }
+  .brand img { width: auto; height: 40px; }
   .hero-art { min-height: 200px; height: auto; padding: 18px 12px; }
   .page-nav { width: 100%; }
   .page-nav a { flex: 1; justify-content: center; }
