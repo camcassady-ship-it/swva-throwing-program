@@ -127,6 +127,32 @@ h1 em { color: #f26a2e; }
 .stage-lead { color: #f6e7df; }
 .original-intro { color: #f6e7df; max-width: 760px; }
 .original-intro a { color: #fff8ef; font-weight: 700; }
+.hash-alias { display: block; height: 0; width: 0; overflow: hidden; }
+.page-nav a.program-name {
+  font-family: "Byrd Block", "Arial Black", Impact, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.stage-kicker { font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; display: block; }
+.ladder { display: grid; gap: 14px; margin: 14px 0 4px; }
+.ladder-label { margin: 0 0 8px; color: #ffc9ad; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.ladder-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 0; margin: 0; }
+.ladder-row li { display: inline-flex; align-items: center; background: transparent; min-width: 0; min-height: 0; padding: 0; margin: 0; }
+.ladder-row li span {
+  background: #f26a2e;
+  color: #3d181c;
+  font-weight: 800;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ladder-row li span.more { background: transparent; color: #ffc9ad; border: 1px dashed #ffc9ad; min-width: 36px; }
+.ladder-row li + li::before { content: "→"; color: #ffc9ad; margin-right: 6px; font-weight: 700; }
 
 .pro-strip { display: grid; gap: 18px; }
 .pro-strip > .eyebrow { margin-bottom: 0; }
