@@ -4,8 +4,6 @@
   const nav = document.getElementById('context-nav');
   const picker = document.querySelector('.stage-picker');
   const { DRILLS, CATEGORIES, STAGES, PLAN_HTML, TOSS_HTML, NMF_INTRO, WB_WAVE_NOTE, STAGE1_NOTE, NMF_DRILLS } = window;
-  const rampPlan = document.getElementById('ramp-plan');
-  if (rampPlan && PLAN_HTML[1]) rampPlan.innerHTML = PLAN_HTML[1];
   if (!panel || !nav || !DRILLS || !picker) return;
 
   let rendered = 0;
@@ -155,8 +153,48 @@
     });
   }
 
+  let selectedDay = 'medium';
+
+  function explicitDay() {
+    const h = location.hash.replace(/^#/, '');
+    if (h === 'light' || h === 'stage-1-light') return 'light';
+    if (h === 'medium' || h === 'stage-1-medium') return 'medium';
+    if (h === 'hard' || h === 'stage-1-hard' || h === 'stage-1-max' || h === 'drill-5') return 'hard';
+    if (h === 'ramp' || h === 'original' || h === 'stage-1' || h === '' || h === 'top') return 'medium';
+    return null;
+  }
+
+  function currentDay() {
+    return explicitDay() || selectedDay;
+  }
+
+  function showDay(day) {
+    selectedDay = day;
+    document.querySelectorAll('#day-selector [data-day]').forEach(tab => {
+      tab.setAttribute('aria-selected', tab.dataset.day === day ? 'true' : 'false');
+    });
+    document.querySelectorAll('[data-day-sheet]').forEach(sheet => {
+      sheet.hidden = sheet.dataset.daySheet !== day;
+    });
+    document.querySelectorAll('[data-day-pro]').forEach(panel => {
+      const video = panel.querySelector('video');
+      panel.hidden = panel.dataset.dayPro !== day;
+      if (panel.hidden && video) video.pause();
+    });
+    const hash = location.hash.replace(/^#/, '');
+    document.querySelectorAll('#stage-1 .drill').forEach(card => {
+      const days = (card.dataset.days || '').split(/\s+/);
+      const show = days.includes(day) || hash === card.id;
+      card.hidden = !show;
+      if (!show) card.querySelectorAll('video').forEach(video => video.pause());
+    });
+  }
+
   function parseHash() {
     const h = location.hash.replace(/^#/, '');
+    if (h === 'light' || h === 'stage-1-light') return { stage: 1, target: 'light' };
+    if (h === 'medium' || h === 'stage-1-medium') return { stage: 1, target: 'medium' };
+    if (h === 'hard' || h === 'stage-1-hard' || h === 'stage-1-max') return { stage: 1, target: 'hard' };
     if (h === 'ramp' || h === 'original' || h === 'stage-1') return { stage: 1, target: 'stage-1' };
     if (h === 'stages' || h === 'enhance') return { stage: 2, target: 'enhance' };
     const match = h.match(/^stage-([1-5])(?:-([\s\S]+))?$/);
@@ -186,6 +224,7 @@
   function applyHash(options) {
     const route = parseHash();
     syncOffset();
+    showDay(currentDay());
     const enhanceStage = route && route.stage >= 2 ? route.stage : (rendered >= 2 ? rendered : 2);
     if (rendered !== enhanceStage) renderStage(enhanceStage);
     else updateTabs();
@@ -204,16 +243,20 @@
   function renderNav() {
     const region = currentRegion();
     const route = parseHash();
-    const signature = `${region}:${route ? route.stage : rendered || 0}`;
+    const signature = `${region}:${currentDay()}:${route ? route.stage : rendered || 0}`;
     if (nav.dataset.signature === signature) return;
     nav.dataset.signature = signature;
     navSignature = signature;
     activeKey = '';
     if (region === 'ramp') {
       nav.setAttribute('aria-label', 'RAMP · Stage 1');
-      const plan = [['stage-1-plan', 'Schedule'], ['stage-1-out', 'Out'], ['stage-1-in', 'Back in'], ['stage-1-position', '40 & 20'], ['stage-1-pitchers', 'Pitchers'], ['stage-1-medium', 'Medium'], ['stage-1-max', 'Max'], ['stage-1-light', 'Light']]
-        .map(([id, label]) => `<a href="#${id}">${label}</a>`).join('');
-      nav.innerHTML = '<a href="#enhance">ENHANCE</a>' + plan + ORIGINAL_NAV.map(([id, n, label]) => `<a href="#${id}" data-drill="${n}"><span>${n}</span> ${label}</a>`).join('');
+      const day = currentDay();
+      const drills = [...document.querySelectorAll('#stage-1 .drill')].filter(card => !card.hidden).map(card => {
+        const n = card.id.replace('drill-', '');
+        const label = card.querySelector('h2').textContent;
+        return `<a href="#${card.id}" data-drill="${n}"><span>${n}</span> ${esc(label)}</a>`;
+      }).join('');
+      nav.innerHTML = `<a href="#enhance">ENHANCE</a><a href="#how">HOW</a><a href="#light"${day === 'light' ? ' aria-current="true"' : ''}>Light</a><a href="#medium"${day === 'medium' ? ' aria-current="true"' : ''}>Medium</a><a href="#hard"${day === 'hard' ? ' aria-current="true"' : ''}>Hard</a>` + drills;
     } else {
       const stage = route && route.stage >= 2 ? route.stage : (rendered >= 2 ? rendered : 2);
       nav.setAttribute('aria-label', `ENHANCE · Stage ${stage}`);
@@ -237,7 +280,7 @@
     const region = currentRegion();
     let key = '';
     if (region === 'ramp') {
-      const sections = [...document.querySelectorAll('#stage-1 .nav-block, #stage-1 .drill')];
+      const sections = [...document.querySelectorAll('#stage-1 .nav-block:not([hidden]), #stage-1 .drill:not([hidden])')];
       let active = sections[0];
       sections.forEach(section => { if (section.getBoundingClientRect().top <= line) active = section; });
       key = active ? (active.dataset.nav || active.id) : '';
